@@ -5,13 +5,11 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
-    @book_comments = BookComment.all
   end
 
   def index
     @book = Book.new
     @books = Book.all
-    @book_comments = BookComment.all
   end
 
   def create
