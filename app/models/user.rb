@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   # そのユーザがフォローされている人の一覧を出したい
-  has_many :followe, through: :passive_relationships, source: :follower
+  has_many :followers, through: :passive_relationships, source: :follower
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
@@ -25,14 +25,14 @@ class User < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
-  
+
   #フォローした時の処理
   def follow(user_id)
-    relationships.create(followed_id: user_id)
+    active_relationships.create(followed_id: user_id)
   end
   #フォローを外すときの処理
   def unfollow(user_id)
-    relationships.find_by(followed_id: user_id).destroy
+    active_relationships.find_by(followed_id: user_id).destroy
   end
   #フォローしているか判定
   def following?(user)
