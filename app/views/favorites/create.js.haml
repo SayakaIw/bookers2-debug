@@ -1,1 +1,0 @@
-$('#favorite_book_<%= params[:book_id] %>').html('<%= link_to "いいね", book_favorites_path(params[:book_id]), method: :delete, remote:true, style: "color: red;" %> <%= @book.favorite.size %>');

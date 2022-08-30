@@ -1,1 +1,0 @@
-$('#favorite_book_<%= params[:book_id] %>').html('<%= link_to "いいね", book_favorites_path(@book), method: :post, remote:true %> <%= @book.favorite.size %>');
