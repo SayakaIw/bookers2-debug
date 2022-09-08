@@ -11,7 +11,7 @@
     <div class='col-md-8 offset-md-1'>
   		<h2>Book detail</h2>
   		<table class='table'>
-  		  <tr id="book_<%= @book.id %>">
+  		  <tr>
           <td><%= link_to user_path(@book.user) do %>
             <%= image_tag @book.user.get_profile_image, size:"100x100" %><br>
             <%= @book.user.name %>
@@ -20,8 +20,9 @@
           <td><%= link_to @book.title, book_path(@book) %></td>
           <td><%= @book.body %></td>
 
-          <td class="favorite-btn"><%= render "favorites/favorite-btn", book: @book %></td>
-          <td class="comments-count">コメント数: <%= @book.book_comments.count %></td>
+          <td class="favorite_btn_<%= @book.id %>"><%= render "favorites/favorite_btn", book: @book %></td>
+          <td class="comments-count_<%= @book.id %>">コメント数: <%= @book.book_comments.count %></td>
+          <td>閲覧数:<%=  @book.impressionist_count %></td>
 
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
@@ -33,8 +34,8 @@
         <%= render "book_comments/index", book: @book %>
       </table>
 
-      <%= form_with model:[@book,@book_comment] do |f| %>
-        <%= f.text_area :comment, size:"90x5" %>
+      <%= form_with model:[@book,@book_comment], local: false do |f| %>
+        <%= f.text_area :comment, rows: '5', class: "w-100", placeholder: "コメントはここに" %>
         <%= f.submit '送信'%>
       <% end %>
     </div>
